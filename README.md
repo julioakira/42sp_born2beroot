@@ -24,7 +24,7 @@ born2beroot made with ❤ for 42sp.
 
 1. **primary** : It is the most common partitions. A system can contain a maximum of 4 primary partitions.
 2. **extended** : It is used to contain logical partitions. In systems where you need more than 4 partitions, an extended one is used to hold any number of logical partitions. It cannot be formatted using a file system, such as ext4, FAT or NTFS not it can hold data directly like the primary or logical drives.
-3. **logical** : These are the partitions created inside the extended partition space. The file systems might not be shared within all S.O. For instance, a Windows system might not read a ex2 partition without a third-party driver, but it can natively read a FAT/NTFS logical partition, while Linux can read all of these.
+3. **logical** : These are the partitions created inside the extended partition space. The file systems might not be shared within all S.O. For instance, a Windows system might not read a ext2 partition without a third-party driver, but it can natively read a FAT/NTFS logical partition, while Linux can read all of these.
 
 - The practical difference between them is that some systems (mainly Windows) cannot boot from logical partitions, requiring you to install the S.O in a primary partition.
 - The `extended` partition's purpose is to extend the four primary partitions limit. By using a extended partition, you can fit many `logical` partitions inside one partition, increasing the initial four maximum threshold.
