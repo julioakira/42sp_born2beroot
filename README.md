@@ -18,7 +18,7 @@ born2beroot made with ❤ for 42sp.
 - In a LVM environment, the `/boot` partition is usually the only thing outside the LVM, besides frequently is also located in the first sections of the disk thus its resizing cannot be easily done.
 - It may be filled with some recovery tools later to act like a rescue partition, like (list some tools) and a S.O image.
 
-### Extended, Primary and Logical Partitions and the Four Partitions Maximum Limit
+### Extended, Primary and Logical Partitions and the Four Primary Partitions Maximum Limit
 
 - There are three kinds of partition types in the legacy MBR partition scheme: `extended` partitions, `primary` partitions and `logical` partitions.
 
