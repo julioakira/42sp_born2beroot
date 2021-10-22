@@ -34,6 +34,15 @@ MBR: < primary | primary | primary | primary >
 MBR: < primary | primary | extended [logical, logical, logical] >
 ```
 - The partition identified as `sda2` is the `extended partition` and it contains all the logical partitions created.
-- By default, the `lsblk` command can only deal with "real" partitions, therefore when you use this command, it only shows a dummy 1K partition, because it is not a "real" partition that contains data, but a extended one. To list them properly, you can use `fdisk -l`, `parted -l` or `blkid -p /dev/sda* | grep sda4` as root.
+- By default, the `lsblk` (List Blocks Devices) command can only deal with "real" partitions, therefore when you use this command, it only shows a dummy 1K partition, because it is not a "real" partition that contains data, but a extended one. To list them properly, you can use `fdisk -l`, `parted -l` or `blkid -p /dev/sda* | grep sda4` as root.
 
-### Encrypted Partitions
+### Logical Volume Management (LVM)
+
+- By definition, LVM is a device mapping framework which manages your logical volumes in the kernel level. The flexibility of LVM allows you to concatenate, combine, resize and move partitions in the disk without the need to unmount.
+- When in a limited four partition system, if you run out of space or need to resize partitions, you were required to take the whole system offline, install the new hard drive, boot into a recovery move, create a partition on the new drive and move the data around (with temporary mount points or other tools).
+- The use of LVM allows more flexible disk space management, since you can add a collection of multiple phisical hard drives into a single volume group, which you can divide into several logical volumes. Although, the filesystem needs to allow resizing, but with ext2, ext3 and ext4, you can do that both offline (unmounted) and online (mounted).
+
+### Encrypted Partitions with LUKS (Linux Unified Key Setup)
+
+- LUKS is a disk encryption system used by default on Linux that. among other features, stores all the password necessary setup information in the partition header, which allows easier data migration.
+- **ongoing**
