@@ -28,11 +28,11 @@ born2beroot made with ❤ for 42sp.
 
 - The practical difference between them is that some systems (mainly Windows) cannot boot from logical partitions, requiring you to install the S.O in a primary partition.
 - The `extended` partition's purpose is to extend the four primary partitions limit. By using a extended partition, you can fit many `logical` partitions inside one partition, increasing the initial four maximum threshold.
-```
-MBR: < primary | primary | primary | primary >
+	```
+	MBR: < primary | primary | primary | primary >
 
-MBR: < primary | primary | extended [logical, logical, logical] >
-```
+	MBR: < primary | primary | extended [logical, logical, logical] >
+	```
 - The partition identified as `sda2` is the `extended partition` and it contains all the logical partitions created.
 - By default, the `lsblk` (List Blocks Devices) command can only deal with "real" partitions, therefore when you use this command, it only shows a dummy 1K partition, because it is not a "real" partition that contains data, but a extended one. To list them properly, you can use `fdisk -l`, `parted -l` or `blkid -p /dev/sda* | grep sda4` as root.
 
@@ -58,7 +58,7 @@ MBR: < primary | primary | extended [logical, logical, logical] >
 - In this regard, the `/swap` partition's main function is to substitute RAM memory for disk space when needed. The kernel can detect blocks of memory in which the contents have not been used recently and swap these blocks of memory to the `/swap` partition, effectively freeing up RAM. For that reason, in Linux systems, the total amount of memory is the sum of RAM plus swap space, refered to as `virtual memory`.
 
 - **So... what is the right amount of swap space?**
-- Well, for some time, the rule was `swap = 2 * RAM`. So when you have, let's say, 4GB of RAM, you would save 8GB of disk space for the `/swap` partition. However, with RAM becoming larger and cheaper, this value has been changing over the years. Here is an example below:
+- Well, for some time, the rule was `swap = 2 * RAM`. So when you have, let's say, 4GB of RAM, you would save 8GB of disk space for the `/swap` partition. If you want to use the `hibernation` feature, which saves the current system state into disk, enabling you to power off and restore your PC at startup with the same state you had when you turned it off, you might want to use more space for the `/swap` partition, in order to effectively hold all the RAM data and whatever more you need. However, with RAM becoming larger and cheaper, this value has been changing over the years. Here is an example below:
 
 	| System RAM | Recommended swap space | Recommended swap w/ hibernation |
 	|------------|------------------------|---------------------------------|
