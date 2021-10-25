@@ -45,4 +45,24 @@ MBR: < primary | primary | extended [logical, logical, logical] >
 ### Encrypted Partitions with LUKS (Linux Unified Key Setup)
 
 - LUKS is a disk encryption system used by default on Linux that. among other features, stores all the password necessary setup information in the partition header, which allows easier data migration.
-- **ongoing**
+
+### The `/home` partition
+- The `/home` partition is optional, but using it might give you some advantages.
+- By default, you just store all the files in a root partition `/`, but having a `/home` partition allows you to store your personal files (Documents, Downloads, Pictures and so on). When you don't have a `/home` your files are stored in the `/home/username` folder.
+- Also, having a separated `/home` partition helps when you might want to change your distro. You can just backup the partition and carry on to installing the new Linux flavour.
+
+### The `/swap` partition
+- There are two basic kinds of memory in a computer:
+1. `RAM Memory` (Random Access Memory) which is used to store data and programs while they are actively running. The RAM memory is volatile, meaning that is serves as a temporary storage and when you shut down your computer or close the program, all data saved in RAM is lost. In the hardware level, the data is electrically stored in transistors and when there is no electric current, the data disappears.
+2. `ROM Memory` (Read Only Memory) instead of storing data in transistors, the information is stored directly onto the chip, written in individual cells using binary code. Because the data is non-volatile, it is effective to store data like the initial boot-up of the system or other data that cannot be lost on shutdown.
+- In this regard, the `/swap` partition's main function is to substitute RAM memory for disk space when needed. The kernel can detect blocks of memory in which the contents have not been used recently and swap these blocks of memory to the `/swap` partition, effectively freeing up RAM. For that reason, in Linux systems, the total amount of memory is the sum of RAM plus swap space, refered to as `virtual memory`.
+
+- **So... what is the right amount of swap space?**
+- Well, for some time, the rule was `swap = 2 * RAM`. So when you have, let's say, 4GB of RAM, you would save 8GB of disk space for the `/swap` partition. However, with RAM becoming larger and cheaper, this value has been changing over the years. Here is an example below:
+
+	| System RAM | Recommended swap space | Recommended swap w/ hibernation |
+	|------------|------------------------|---------------------------------|
+	| < 2GB      | `RAM * 2`              | `RAM * 3`                       |
+	| 2GB ~ 8GB  | `= RAM`                | `RAM * 2`                       |
+	| 8GB ~ 64GB | `1/2 * RAM`            | `3/2 * RAM`                     |
+
