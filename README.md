@@ -1,14 +1,14 @@
 # 42sp_born2beroot
 born2beroot made with ❤ for 42sp.
 
-## Tools used
+# Tools used
 
 - Oracle VM VirtualBox 6.1.22 r144080 (Qt5.12.8)
 - debian-11.1.0
 
-## Key Concepts
+# Key Concepts
 
-### Creating and Managing Partitions
+## Creating and Managing Partitions
 
 ![partition_schema](images/partitions_schema.png)
 
@@ -44,7 +44,7 @@ born2beroot made with ❤ for 42sp.
 
 ### Encrypted Partitions with LUKS (Linux Unified Key Setup)
 
-- LUKS is a disk encryption system used by default on Linux that. among other features, stores all the password necessary setup information in the partition header, which allows easier data migration.
+- LUKS is a disk encryption system used by default on Linux that, among other features, stores all the password necessary setup information in the partition header, which allows easier data migration.
 
 ### The `/home` partition
 - The `/home` partition is optional, but using it might give you some advantages.
@@ -66,3 +66,6 @@ born2beroot made with ❤ for 42sp.
 	| 2GB ~ 8GB  | `= RAM`                | `RAM * 2`                       |
 	| 8GB ~ 64GB | `1/2 * RAM`            | `3/2 * RAM`                     |
 
+## Understanding and using SSH
+
+- **ongoing**
