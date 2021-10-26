@@ -114,8 +114,9 @@ born2beroot made with ❤ for 42sp.
 	$ sudo service sshd restart
 	$ sudo service ssh restart
 	```
-- To check if the changes you made have been applied, use. As you can see, we changed the service running port to 4242.
+- To check if the changes you made have been applied, use the command below.
 	```
 	$ sudo systemctl status ssh
 	```
 	![ssh_config_file](images/ssh_status_changed.png)
+- As you can see, we changed the service running port to 4242.
