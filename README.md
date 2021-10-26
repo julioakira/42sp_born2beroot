@@ -34,7 +34,7 @@ born2beroot made with ❤ for 42sp.
 	MBR: < primary | primary | extended [logical, logical, logical] >
 	```
 - The partition identified as `sda2` is the `extended partition` and it contains all the logical partitions created.
-- By default, the `lsblk` (List Blocks Devices) command can only deal with "real" partitions, therefore when you use this command, it only shows a dummy 1K partition, because it is not a "real" partition that contains data, but a extended one. To list them properly, you can use `fdisk -l`, `parted -l` or `blkid -p /dev/sda* | grep sda4` as root.
+- By default, the `lsblk` (List Blocks Devices) command can only deal with "real" partitions, therefore when you use this command, it only shows a dummy 1K partition, because it is not a "real" partition that contains data, but a extended one. To list them properly, you can use `fdisk -l`, `parted -l` or `blkid -p /dev/sda* | grep sda5` as root.
 
 ### Logical Volume Management (LVM)
 
