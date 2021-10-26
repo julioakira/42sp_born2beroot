@@ -70,8 +70,8 @@ born2beroot made with ❤ for 42sp.
 
 ## Understanding and using SSH
 
-- SSH stands for Secure Shell or Secure Socket Shell is a network protocol that enables a secure access to a computer over an unsecured network. It also refers to a set of utilities that implement the named protocol, like strong password and public key authentication and encrypted data transfer between two computers over networks. Two types of encryption are used in the SSH protocol: the `symmetric shared secret` and the `asymmetric public-private keys`.
-- Usually, the SSH protocol connects a client to a server in a data-exchanging relation. These actions are carried out in a `assymetric encryption` manner, meaning that the server encrypts messages to the client using the `public key`, whilst the client uses the `private key` to decrypt the message and prove their identity:
+- SSH stands for Secure Shell or Secure Socket Shell. It is a network protocol that enables a secure access to a computer over an unsecured network. It also refers to a set of utilities that implement the named protocol, like `strong password policies`, `public key authentication` and `encrypted data transfer` between two computers over networks. Two types of encryption are used in the SSH protocol: the `symmetric shared secret` and the `asymmetric public-private keys`.
+- Usually, the SSH protocol connects a client to a server in a data-exchanging relation. These actions are carried out in a `assymetric encryption` manner, meaning that the server encrypts messages to the client using the `public key`, whilst the client uses the `private key` to decrypt the message and prove their identity. This procedure is carried out as follows:
 
 1. Client sends an ID for the key/pair it wants to authenticate within the server.
 
@@ -90,4 +90,32 @@ born2beroot made with ❤ for 42sp.
 8. If both values match, it is proven that the client had the private key, and the server authenticates the client connection.
 
 
+### Changing default SSH port
 
+- First, check the current SSH service status with
+	```
+	$sudo systemctl status ssh
+	```
+	As you will see, the default port for the SSH service is 22.
+	![ssh_status](images/ssh_status.png)
+
+- Then, use
+
+	```
+	$ sudo vi /etc/ssh/sshd_config
+	```
+
+	to edit the SSH config file, uncomment and change the Port line with the 	port you want to use, in our case the 4242 port, then save your changes in 	the file.
+
+	![ssh_config_file](images/ssh_config_file.png)
+
+- To restart the SSH service and apply your changes, use :
+	```
+	$ sudo service sshd restart
+	$ sudo service ssh restart
+	```
+- To check if the changes you made have been applied, use. As you can see, we changed the service running port to 4242.
+	```
+	$ sudo systemctl status ssh
+	```
+	![ssh_config_file](images/ssh_status_changed.png)
