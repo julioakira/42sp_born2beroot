@@ -70,4 +70,24 @@ born2beroot made with ❤ for 42sp.
 
 ## Understanding and using SSH
 
-- **ongoing**
+- SSH stands for Secure Shell or Secure Socket Shell is a network protocol that enables a secure access to a computer over an unsecured network. It also refers to a set of utilities that implement the named protocol, like strong password and public key authentication and encrypted data transfer between two computers over networks. Two types of encryption are used in the SSH protocol: the `symmetric shared secret` and the `asymmetric public-private keys`.
+- Usually, the SSH protocol connects a client to a server in a data-exchanging relation. These actions are carried out in a `assymetric encryption` manner, meaning that the server encrypts messages to the client using the `public key`, whilst the client uses the `private key` to decrypt the message and prove their identity:
+
+1. Client sends an ID for the key/pair it wants to authenticate within the server.
+
+2. The server checks the `~/.ssh/authorized_keys` file of the account which the clients is attempting to log in for the provided ID.
+
+3. If that public key with the matching provided ID is found, the server generates a random number and used the public key to encrypt the number.
+
+4. The server responds to the client with the encrypted message.
+
+5. The client decrypts the packets with it's associated private key, revealing the encrypted number sent by the server.
+
+6. The client combines the decrypted number with the shared session key that was used to encrypt the packet and calculates the MD5 hash of the value. This hash is then sent back to the server as an answer to the encrypted number packet.
+
+7. The server, using the same shared session key and having the original number, calculates the MD5 hash again and compares his own result with the one that the client sent back.
+
+8. If both values match, it is proven that the client had the private key, and the server authenticates the client connection.
+
+
+
