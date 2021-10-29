@@ -204,7 +204,7 @@ born2beroot made with ❤ for 42sp.
 	$ sudo ufw allow 1000:2000/udp
 	$ sudo ufw deny 1000:2000/udp
 	```
-- To enable access from specific IP address, we can do:
+- To enable/disable access from specific IP address, we can do:
 	```
 	// Syntax
 	$ sudo ufw allow from [ip]
