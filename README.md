@@ -34,7 +34,15 @@ born2beroot made with ❤ for 42sp.
 	MBR: < primary | primary | extended [logical, logical, logical] >
 	```
 - The partition identified as `sda2` is the `extended partition` and it contains all the logical partitions created.
-- By default, the `lsblk` (List Blocks Devices) command can only deal with "real" partitions, therefore when you use this command, it only shows a dummy 1K partition, because it is not a "real" partition that contains data, but a extended one. To list them properly, you can use `fdisk -l`, `parted -l` or `blkid -p /dev/sda* | grep sda5` as root.
+- By default, the `lsblk` (List Blocks Devices) command can only deal with "real" partitions, therefore when you use this command, it only shows a dummy 1K partition, because it is not a "real" partition that contains data, but a extended one. To list them properly, you can run as root:
+
+	```
+	$ fdisk -l
+	// or
+	$ parted -l
+	// or
+	$ blkid -p /dev/sda* | grep sda5
+	```
 
 ### Logical Volume Management (LVM)
 
@@ -94,7 +102,7 @@ born2beroot made with ❤ for 42sp.
 
 - First, check the current SSH service status with
 	```
-	$sudo systemctl status ssh
+	$ sudo systemctl status ssh
 	```
 	As you will see, the default port for the SSH service is 22.
 	![ssh_status](images/ssh_status.png)
@@ -105,9 +113,15 @@ born2beroot made with ❤ for 42sp.
 	$ sudo vi /etc/ssh/sshd_config
 	```
 
-	to edit the SSH config file, uncomment and change the Port line with the 	port you want to use, in our case the 4242 port, then save your changes in 	the file.
+	to edit the SSH config file, uncomment and change the `Port` line with the 	port you want to use, in our case the 4242 port, then save your changes in 	the file.
 
 	![ssh_config_file](images/ssh_config_file.png)
+
+### Denying Root Login
+
+- To deny SSH login as root we uncomment the following line and set from `yes` to `no`.
+
+	![ssh_config_file](images/deny_root_login_ssh.png)
 
 - To restart the SSH service and apply your changes, use :
 	```
@@ -120,3 +134,97 @@ born2beroot made with ❤ for 42sp.
 	```
 	![ssh_config_file](images/ssh_status_changed.png)
 - As you can see, we changed the service running port to 4242.
+
+## Package Managers
+
+### What is a package?
+
+- A package is a piece of software you install on your operating system. Whilst we have many kinds of packages, the most common ones are graphical (GUI) applications, command line (CLI) tools and libraries or dependencies required for building another application.
+
+- In older days, we were required to build software from source, that means we usually had a README file with its instructions, dependencies, location of binary files and more. Usually, we could have a configure script or Makefile used to compile and handle the dependencies in a more automated way.
+
+### What is a package manager?
+
+- To abstract that complexity away, Linux distros created their own packaging methods to handle those steps and provide the end user with precompiled binary files, some metadada and a much more friendly installation process. In that instance, in order to install, remove, upgrade, configure and manage software in your operating system you can do it manually, which would take a lot of time and you probably would lose track of most of your programs, or you can use a piece of software to do that for you. In that instance, that's what a package manager does for you: it installs, removes, upgrades, configures and manages software in your operating system.
+
+	![compiling_vs_packaging_by_FOSS](images/compilation-vs-packaging.png)
+
+### Kinds of Package Managers
+
+- In Ubuntu/Debian based systems, the most common package managers are `apt`, `aptitude` and `synaptic`. Although they all do the same job, there are differences between how they work, handle packages and present themselves. We will not go deep into the minor differences between those besides offering a very quick explanation about them:
+1. `apt` is a more low-level CLI package manager which only works by typing commands such as `apt install` or `apt update`.
+2. `aptitude` is a more high-level tool and provides a terminal menu interface where you can navigate instead of typing.
+3. `synaptic` is also a more high-level tool and provides a GUI where you can navigate, click and handle your applications in a more graphical way.
+
+## Installing and Configuring the `ufw` firewall
+
+- The UFW Firewall (Uncomplicated Firewall) is a front-end that runs `iptables`. To install it we can run:
+
+	```
+	$ sudo apt-get install ufw
+	// or
+	$ sudo aptitude install ufw
+	```
+- To check the current status, disable or enable the ufw firewall we can run:
+
+	```
+	$ sudo ufw status
+	$ sudo ufw disable
+	$ sudo ufw enable
+	```
+
+### Setting up the defaults
+
+- Some of the most interesting features of using UFW are the defaults for `allowing` or `denying` incoming or outgoing connections. While the need for denying outgoing connections might be a bit too restrictive, it might be necessary in some cases. We can do that with:
+
+	```
+	$ sudo ufw default deny incoming
+	// and
+	$$ sudo ufw default deny outgoing
+	```
+- There are some features like the default for SSH connections:
+
+	```
+	$sudo ufw allow ssh
+	```
+- Which is the same as:
+	```
+	$ sudo ufw allow 22/tcp
+	```
+- But in our case, since our SSH service is running on port 4242, we should use:
+	```
+	$ sudo ufw allow 4242/tcp
+	```
+- If we want to enable/disable a range of ports, we can use:
+	```
+	// Syntax
+	$ sudo ufw allow [from]:[to]/[protocol]
+	$ sudo ufw deny [from]:[to]/[protocol]
+	// Example
+	$ sudo ufw allow 1000:2000/udp
+	$ sudo ufw deny 1000:2000/udp
+	```
+- To enable access from specific IP address, we can do:
+	```
+	// Syntax
+	$ sudo ufw allow from [ip]
+	$ sudo ufw deny from [ip]
+	// Example
+	$ sudo ufw allow from 192.168.10.1
+	$ sudo ufw deny from 192.168.10.1
+	```
+- When the rules become numerous and complex, we can check and handle them by a ID number with:
+	```
+	// To show all rules and their IDs
+	$ sudo ufw status numbered
+	// Then handle the rule by ID
+	$ sudo ufw delete [ID]
+	```
+- If for whatever reason, we need to reset all the configurations to default values, we can do with:
+	```
+	$ sudo ufw reset
+	```
+
+## Configuring password policies
+- **ongoing**
+
