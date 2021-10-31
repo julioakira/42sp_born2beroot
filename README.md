@@ -225,6 +225,46 @@ born2beroot made with ❤ for 42sp.
 	$ sudo ufw reset
 	```
 
+## User groups and the `root` user
+
+### What is a `group`?
+
+- In Linux systems, a `group` is an array of users that share the same set of privileges for `read`, `write` and `execute` resources inside the system. There are two kinds of groups:
+
+1. `Primary/Login Group` - This is the group that is needed to create file associations to the user who creates it. It usually has the same name as the user who belongs to it. Each user has to belong to **one and only one** primary group. They are listed in the `~/etc/passwd` file.
+2. `Secondary/Supplementary Group` - Is used to contain a certain set of privileges which are granted to the belonging users. In this case, a given user can belong to **zero or more** secondary groups. They are listed in the `~/etc/group` file.
+
+	![groups_list](images/groups_list.png)
+	- The `akira` group is an example of a `primary group` while the `sudo` group is an example of a `secondary group`.
+
+### What is `root`?
+
+- The root user is the superuser account on the system. It has all the privileges and permits. That means it can `read`, `write` and `execute` anything on the system.
+- To change the shell mode to root (or superuser) mode, we can run
+
+	```
+	$ su
+	// or
+	$ sudo su
+	```
+- During the installation, we are prompted for a root password. If we don't supply any or we want to change it, we can run:
+
+	```
+	$ sudo passwd root
+	// or
+	$ su
+	# passwd root
+	```
+
+### `sudo` in the root context
+
+- In the system administration context, we have a tool called `sudo` which acts as a temporary root permit for any user who belongs to the `sudo group`. It just doesn't just run commands "as if you were root", but literally runs the comand as root.
+- If it is not installed it we can run the following command to install it:
+
+	```
+	$ apt install sudo -y
+	```
+
 ## Configuring password policies
 - **ongoing**
 
