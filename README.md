@@ -266,5 +266,79 @@ born2beroot made with ❤ for 42sp.
 	```
 
 ## Configuring password policies
-- **ongoing**
+- To configure our password policies, we will need to look at the following files:
 
+1. `~/etc/login.defs`
+2. `~/etc/pam.d/common-password`
+
+- All the passwords need, in order, to comply to the following rules:
+
+1. Expire every 30 days.
+2. Minimum of 2 days days before modification.
+3. The user has to receive a message 7 days before their password expires.
+4. At least 10 characters long. Must contain an uppercase letter and a number and cannot contain more than 3 consecutive identical characters.
+5. Must not include the name of the user.
+6. The users password must have at least 7 characters that are not part of the former password.
+7. The root password must comply with all these, except number 6.
+
+- Firstly, for the first three rules, we are going to edit the following lines in the`~/etc/login.defs` file as following:
+
+	![pw_days_age_warn](images/pw_days_age_warn.png)
+
+- Then, additionally, we want to force the users to use a different password every time it expires, up to the last three passwords used. To do that we are going to append `remember=3` to the `~/etc/pam.d/common-password` file:
+
+	![pw_history](images/pw_history.png)
+
+- For the next policies, we are going to need an additional package to manager the password quality. To install it, run:
+
+	```
+	$ sudo apt install libpam-pwquality
+	```
+
+- Next, we are editing the password quality configuration file for the package we just installed, which is located at `~/etc/security/pwquality.conf`
+
+- To set the password minimum length, uncomment and edit:
+
+	![pw_min_len](images/pw_min_len.png)
+
+- To ensure that it contains at least one uppercase letter and one digit, uncomment and edit:
+
+	![pw_min_upper_digit](images/pw_min_upper_digit.png)
+
+- Then, we make sure that it has at least 2 different classes of characters (one for a uppercase and one for a digit):
+
+	![pw_class_min](images/pw_class_min.png)
+
+- To force the use of no more than 3 consecutive characters, uncomment and edit:
+
+	![pw_repeat_max](images/pw_repeat_max.png)
+
+- For it to not include the user name, uncomment and edit:
+
+	![pw_user_check](images/pw_user_check.png)
+
+- Now, we ensure that the new password does not contain less than 7 characters that are different of the former password:
+
+	![pw_diff_old](images/pw_diff_old.png)
+
+## Configuring `sudo`
+
+- Next up, we need to configure our policies for the `sudo group`, which follows the requirements below:
+
+1. Limit auth using `sudo` to 3 maximum attempts.
+2. Set a custom message when the supplied password is incorrect.
+3. Archive all actions (inputs and outputs) using sudo in the `~/var/log/sudo` folder.
+4. Enable `TTY` mode. `TTY` stands for `Teletype Mode`, which prints the file name of the terminal connected to the stdin, or if no file is printed it means that the command is part of a script or is being piped to another output. It is useful to check if the output medium is the terminal.
+5. Restrict the paths that can be used by sudo, for example:
+
+	```
+	/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+	```
+
+- To change these behaviours, we need to edit the sudoers file, located in `~/etc/sudoers` with the following lines:
+
+	![sudo_configs](images/sudo_configs.png)
+
+## Creating a system monitoring script
+
+- **ongoing**
