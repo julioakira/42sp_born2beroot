@@ -339,6 +339,8 @@ born2beroot made with ❤ for 42sp.
 
 	![sudo_configs](images/sudo_configs.png)
 
+- Remember that since we changed the default path for the logfile, we need to create the directory `~/var/log/sudo` as well as the logfile at `~/var/log/sudo/sudo.log`.
+
 ## Creating a system monitoring script
 
 - **ongoing**
