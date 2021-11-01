@@ -342,3 +342,4 @@ born2beroot made with ❤ for 42sp.
 ## Creating a system monitoring script
 
 - **ongoing**
+- **remember to create a user42 group**
