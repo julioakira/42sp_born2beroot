@@ -237,6 +237,22 @@ born2beroot made with ❤ for 42sp.
 	![groups_list](images/groups_list.png)
 	- The `akira` group is an example of a `primary group` while the `sudo` group is an example of a `secondary group`.
 
+### Creating the `user42` group and adding our user
+
+- To create a group, we use the command `groupadd` followed by the name of the group:
+
+	```
+	$ sudo groupadd user42
+	```
+
+- Then we want to add user to it using the `usermod -a -G [groupname] [user]`. The `-a` option tells the `usermod` command that we are appending the user to the supplied groups without removing it from other groups and the `-G` option tells that we are appending to the group name that follows the option:
+
+	```
+	$ sudo usermod -a -G user42 akira
+	// Can be also done concatenating the options
+	$ sudo usermod -aG user42 akira
+	```
+
 ### What is `root`?
 
 - The root user is the superuser account on the system. It has all the privileges and permits. That means it can `read`, `write` and `execute` anything on the system.
@@ -343,5 +359,27 @@ born2beroot made with ❤ for 42sp.
 
 ## Creating a system monitoring script
 
-- **ongoing**
-- **remember to create a user42 group**
+- Now, we are required to create a bash script called `monitoring.sh` that will broadcast some informations in all terminals every 10 minutes. The script must display the following information:
+
+1. The architecture of the OS and the kernel version.
+2. The number of physical processors.
+3. The number of virtual processors.
+4. The current available RAM and the percentage utilization rate.
+5. The current available memory and the percentage utilization rate.
+6. The current percentage utilization rate of the processor.
+7. The date and time of the last reboot.
+8. Whether LVM is active or not.
+9. The number of active connections.
+10. The IPv4 address of the server and its MAC Address.
+11. The number of commands executed with `sudo`.
+
+- We are going to use the following commands:
+
+	```
+	$ head -n 2 /etc/os-release
+	# ss -tulnp
+	```
+- In addition, we will also use the following packages:
+
+1. `cron`
+2. `wall`
