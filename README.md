@@ -76,6 +76,30 @@ born2beroot made with ❤ for 42sp.
 	| 2GB ~ 8GB  | `= RAM`                | `RAM * 2`                       |
 	| 8GB ~ 64GB | `1/2 * RAM`            | `3/2 * RAM`                     |
 
+## Mandatory Access Control (MAC)
+
+### What is MAC?
+
+- `Mandatory Access Control` (MAC) is a type of `access control` used by OS and DBs that aims to control and limit a subject's or initiator access to a resource or operation. In the case of OS it usually means restricting the access to a process or thread to perform an operation in a given object (i.e: files in Unix). In MAC, the security policy is centralized in a administrator, meaning that users to not have the ability to override that policy, granting access to a resource, for example.
+
+### What is DAC?
+
+- In contrast to MAC, we have the `Discretionary Access Control` (DAC) which also controls the ability of users to access certain resources, but allows users to make policy decisions and/or assign security attributes. The Unix system of users/groups and r/w/e permissions is an example of DAC.
+
+### DAC x MAC
+
+- For more info on MAC/DAC, check [MAC vs DAC](https://www.ekransystem.com/en/blog/mac-vs-dac)
+
+### AppArmor x SELinux
+
+- Both AppArmor and SELinux refer to MAC implementations, but their mechanisms and implementation greatly difer.
+
+- AppArmor is more path-based, meaning that it identifies the objects by path. Insecure or untrusted processes run in a restricted confinement that may or may not be allowed to communicate with other processes.
+
+- Security-Enhanced Linux (SELinux) uses inode, or index node in which each inode stores the attributes and disk block locations of the objects's data in a label-like format. It might also include metadata about the objects, like access info, modification, owner and permission.
+
+- In practice, there is a traditional difference between them: in AppArmor, a unaccessible file may become accessible via hard link, since it works with the file paths. In SELinux, the access would be denied because the inode would be different.
+
 ## Understanding and using SSH
 
 - SSH stands for Secure Shell or Secure Socket Shell. It is a network protocol that enables a secure access to a computer over an unsecured network. It also refers to a set of utilities that implement the named protocol, like `strong password policies`, `public key authentication` and `encrypted data transfer` between two computers over networks. Two types of encryption are used in the SSH protocol: the `symmetric shared secret` and the `asymmetric public-private keys`.
@@ -365,7 +389,7 @@ born2beroot made with ❤ for 42sp.
 2. The number of physical processors.
 3. The number of virtual processors.
 4. The current available RAM and the percentage utilization rate.
-5. The current available memory and the percentage utilization rate.
+5. The current available memory (disk) and the percentage utilization rate.
 6. The current percentage utilization rate of the processor.
 7. The date and time of the last reboot.
 8. Whether LVM is active or not.
@@ -373,13 +397,4 @@ born2beroot made with ❤ for 42sp.
 10. The IPv4 address of the server and its MAC Address.
 11. The number of commands executed with `sudo`.
 
-- We are going to use the following commands:
-
-	```
-	$ head -n 2 /etc/os-release
-	# ss -tulnp
-	```
-- In addition, we will also use the following packages:
-
-1. `cron`
-2. `wall`
+- The monitoring script is located [here](monitoring.sh). Inside the VM, it is located at `/usr/local/sbin` by convention.
