@@ -263,6 +263,15 @@ born2beroot made with ❤ for 42sp.
 
 ### Creating the `user42` group and adding our user
 
+- To create a user, we user the command `useradd` followed by the name of the user:
+
+	```
+	// Syntax
+	$ sudo useradd username
+	// Then we set the user's password
+	$ sudo passwd username
+	```
+
 - To create a group, we use the command `groupadd` followed by the name of the group:
 
 	```
