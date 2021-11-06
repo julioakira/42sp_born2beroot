@@ -259,7 +259,10 @@ born2beroot made with ❤ for 42sp.
 2. `Secondary/Supplementary Group` - Is used to contain a certain set of privileges which are granted to the belonging users. In this case, a given user can belong to **zero or more** secondary groups. They are listed in the `~/etc/group` file.
 
 	![groups_list](images/groups_list.png)
-	- The `akira` group is an example of a `primary group` while the `sudo` group is an example of a `secondary group`.
+	- The `akira` group is an example of a `primary group` while the `sudo` group is an example of a `secondary group`. To check a specific user's groups we can type:
+		```
+		$ groups username
+		```
 
 ### Creating the `user42` group and adding our user
 
