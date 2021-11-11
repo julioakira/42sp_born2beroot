@@ -109,7 +109,7 @@ born2beroot made with ❤ for 42sp.
 
 2. The server checks the `~/.ssh/authorized_keys` file of the account which the clients is attempting to log in for the provided ID.
 
-3. If that public key with the matching provided ID is found, the server generates a random number and used the public key to encrypt the number.
+3. If that public key with the matching provided ID is found, the server generates a random number and uses the public key to encrypt the number.
 
 4. The server responds to the client with the encrypted message.
 
@@ -410,3 +410,34 @@ born2beroot made with ❤ for 42sp.
 11. The number of commands executed with `sudo`.
 
 - The monitoring script is located [here](monitoring.sh). Inside the VM, it is located at `/usr/local/sbin` by convention.
+
+- To schedule and run a job, we need `cron` and to broadcast to all users we use `wall`. As far as I remember, `cron` and `wall` are already installed in Debian by default. To use `cron`, type:
+	```
+	// Checking scheduled jobs.
+	$ crontab -l
+	// Edit scheduled jobs.
+	$ crontab -e
+	```
+- `cron` can be used as a regular user or as root. To use root mode, just use sudo or run it as root.
+- To use `wall` we can use it normally or pipe another command to it:
+
+	```
+	// Regular usage
+	$ wall "Hello, users!"
+	// To pipe it
+	$ echo "Message" | wall
+	// To omit the banner
+	# echo "Message" | wall -n
+	```
+
+- When we edit the jobs, we can also insert a job in the file that opens. The syntax is as follows:
+	```
+	*/10 * * * * /usr/bin/bash /usr/local/sbin/monitoring.sh | wall -n
+	```
+- In order, it means:
+
+1. `*/10` - At every 10 minutes
+2. `* * * *` - Every hour/day of month/month/day of the week.
+3. `/usr/bin/bash` - The full path for bash, since we want bash to run it
+4. `/usr/local/sbin/monitoring.sh` - Our monitoring script's location with full path.
+5. `| wall -n` - We pipe the output of our script to `wall` to broadcast it, using the `-n` flag to supress the banner.

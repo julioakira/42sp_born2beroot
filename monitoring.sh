@@ -32,7 +32,7 @@ MAC_ADDRESS=$(ifconfig | sed -n 's/ether//p' | sed -n 's/^[[:space:]]*//gp' | se
 PUBLIC_IP_ADDRESS=$(curl -s ifconfig.me)
 LOCAL_IP_ADDRESS=$(hostname -I | awk '{print $1}')
 # Commands ran with sudo
-COUNT_SUDO=$(cat /var/log/sudo/sudo.log | grep "COMMAND" | wc -l)
+COUNT_SUDO=$(cat /var/log/sudo/sudo.log | grep -a "COMMAND" | wc -l)
 ## Outputs
 echo "#Architecture: $OS $KERNEL_VERSION $ARCHITECTURE"
 echo "#CPU Physical: $PHYSICAL_CPU"
