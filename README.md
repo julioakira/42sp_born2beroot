@@ -277,6 +277,13 @@ born2beroot made with ❤ for 42sp.
 	$ sudo passwd username
 	```
 
+- To delete a user, we use:
+	```
+	$ sudo deluser username
+	// To delete its associated home
+	$ sudo deluser --remove-home username
+	```
+
 - To create a group, we use the command `groupadd` followed by the name of the group:
 
 	```
