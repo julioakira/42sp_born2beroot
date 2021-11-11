@@ -271,6 +271,8 @@ born2beroot made with ❤ for 42sp.
 	```
 	// Syntax
 	$ sudo useradd username
+	// To create a user with a home directory
+	$ sudo useradd -m username
 	// Then we set the user's password
 	$ sudo passwd username
 	```
