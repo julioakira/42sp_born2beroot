@@ -298,6 +298,14 @@ born2beroot made with ❤ for 42sp.
 	$ sudo usermod -aG user42 akira
 	```
 
+- Incase we need to remove a user that belonged to the `sudo group` in Debian, is likely that there is still an entry in the sudoers file. To remove it, do:
+
+	```
+	$ sudo visudo
+	// Remove the line below in the sudoers file
+	<username>    ALL=(ALL:ALL) ALL
+	```
+
 ### What is `root`?
 
 - The root user is the superuser account on the system. It has all the privileges and permits. That means it can `read`, `write` and `execute` anything on the system.
