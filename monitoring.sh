@@ -5,9 +5,9 @@ OS=$(uname -o)
 ARCHITECTURE=$(uname -m)
 KERNEL_VERSION=$(uname -v)
 # Physical CPUs
-PHYSICAL_CPU=$(lscpu | sed '5q;d' | grep -P -o "\d+")
+PHYSICAL_CPU=$(cat /proc/cpuinfo | grep "physical id" | uniq | wc -l)
 # Virtual CPUs
-VIRTUAL_CPU=$(cat /proc/cpuinfo | grep processor | wc -l)
+VIRTUAL_CPU=$(cat /proc/cpuinfo | grep "processor" | uniq | wc -l)
 #RAM Info
 TOTAL_MEM=$(awk '$3=="kB"{$2=$2/1024;$3="MB"} 1' /proc/meminfo | awk '{print $2}' | sed '1q;d')
 USED_MEM=$(awk '$3=="kB"{$2=$2/1024;$3="MB"} 1' /proc/meminfo | awk '{print $2}' | sed '2q;d')
@@ -39,15 +39,15 @@ echo "#CPU Physical: $PHYSICAL_CPU"
 echo "#vCPU: $VIRTUAL_CPU"
 if [[ $( echo "$USED_MEM == $TOTAL_MEM" | bc -l) == 1 ]]
 then
-	echo "#Memory Usage: ${TOTAL_MEM}/${USED_MEM}MB (100%)"
+	echo "#Memory Usage: ${USED_MEM}/${TOTAL_MEM}MB (100%)"
 else
-	echo "#Memory Usage: ${TOTAL_MEM}/${USED_MEM}MB ($USAGE_MEM%)"
+	echo "#Memory Usage: ${USED_MEM}/${TOTAL_MEM}MB ($USAGE_MEM%)"
 fi
 if [[ $( echo "$USED_DISK == $TOTAL_DISK" | bc -l) == 1 ]]
 then
-	echo "#Disk Usage: ${TOTAL_DISK}MB/${USED_DISK}MB (100%)"
+	echo "#Disk Usage: ${USED_DISK}MB/${TOTAL_DISK}MB (100%)"
 else
-	echo "#Disk Usage: ${TOTAL_DISK}MB/${USED_DISK}MB ($USAGE_DISK%)"
+	echo "#Disk Usage: ${USED_DISK}MB/${TOTAL_DISK}MB ($USAGE_DISK%)"
 fi
 echo "#CPU Load: $USAGE_CPU%"
 echo "#Last Boot: $LAST_REBOOT"
