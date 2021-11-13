@@ -23,7 +23,7 @@ LAST_REBOOT=$(who -b | awk '{print $3 " " $4}')
 # Active LVM
 ACTIVE_LVM=$(cat /etc/fstab | grep "mapper")
 # Active Connections
-ACTIVE_CONN=$(netstat -natp | grep "LISTEN\|ESTABLISHED" | wc -l)
+ACTIVE_CONN=$(netstat -natp | grep "ESTABLISHED" | wc -l)
 # Active Connected Users
 USERS_CONN=$(w | tail -n +3 | wc -l)
 # MAC Address
@@ -39,9 +39,9 @@ echo "#CPU Physical: $PHYSICAL_CPU"
 echo "#vCPU: $VIRTUAL_CPU"
 if [[ $( echo "$USED_MEM == $TOTAL_MEM" | bc -l) == 1 ]]
 then
-	echo "#Memory Usage: ${USED_MEM}/${TOTAL_MEM}MB (100%)"
+	echo "#Memory Usage: ${USED_MEM}MB/${TOTAL_MEM}MB (100%)"
 else
-	echo "#Memory Usage: ${USED_MEM}/${TOTAL_MEM}MB ($USAGE_MEM%)"
+	echo "#Memory Usage: ${USED_MEM}MB/${TOTAL_MEM}MB ($USAGE_MEM%)"
 fi
 if [[ $( echo "$USED_DISK == $TOTAL_DISK" | bc -l) == 1 ]]
 then
@@ -57,7 +57,12 @@ then
 else
 	echo "#Active LVM: False"
 fi
-echo "#Active Connections: $ACTIVE_CONN"
+if [[ $( echo "$ACTIVE_CONN" | bc -l > 0) ]]
+then
+	echo "#Active Connections: $ACTIVE_CONN ESTABLISHED"
+else
+	echo "#Active Connections: $ACTIVE_CONN"
+fi
 echo "#Users logged: $USERS_CONN"
 echo "#Network: Public IP ($PUBLIC_IP_ADDRESS) Local IP ($LOCAL_IP_ADDRESS)"
 echo "#MAC Address: $MAC_ADDRESS"

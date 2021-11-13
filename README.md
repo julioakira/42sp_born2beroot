@@ -249,6 +249,26 @@ born2beroot made with ❤ for 42sp.
 	$ sudo ufw reset
 	```
 
+## Hosts and Hostname
+
+### What is a hostname?
+
+- The hostname is a label assigned to a device within a network, which distinguishes different devices on a specific network or over the internet.
+
+### Checking and modifying the hostname
+
+- To check your hostname, type and check the `Static Hostname` field:
+
+	```
+	$ hostnamectl
+	```
+- To change your hostname, do:
+
+	```
+	$ hostnamectl set-hostname new_name
+	```
+- Then, edit the /etc/hosts file and replace all old names for the chosen new name.
+
 ## User groups and the `root` user
 
 ### What is a `group`?
@@ -275,6 +295,19 @@ born2beroot made with ❤ for 42sp.
 	$ sudo useradd -m username
 	// Then we set the user's password
 	$ sudo passwd username
+	```
+
+- To change a user's name, we do:
+
+	```
+	$ usermod -l new old
+	// If if fails because of a running process
+	$ pkill -u username pid
+	$ pkill -9 -u username
+	// Then change de primary groupname
+	$ groupmod -n new old
+	// Then change the user home directory to the new user's name
+	$ usermod -d /home/username -m username
 	```
 
 - To delete a user, we use:
