@@ -304,7 +304,7 @@ born2beroot made with ❤ for 42sp.
 	$sudo adduser username
 	```
 
-- **NOTE:** When we add a user, with adduser and we are prompted for a password, if we exceed the maximum retries (which in our case is 3) **the user will still be created** but with no password. That means we **will not be able** to authenticate this user using the password method, for obvious reasons.
+- **NOTE:** When we add a user, with `adduser` and we are prompted for a password (or with `useradd` and do not specify a password) if we exceed the maximum retries (which in our case is 3) **the user will still be created** but with no password. That means we **will not be able** to authenticate this user using the password method, for obvious reasons.
 
 - To change a user's name, we do:
 
