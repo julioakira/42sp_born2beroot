@@ -27,7 +27,7 @@ ACTIVE_CONN=$(netstat -natp | grep "ESTABLISHED" | wc -l)
 # Active Connected Users
 USERS_CONN=$(w | tail -n +3 | wc -l)
 # MAC Address
-MAC_ADDRESS=$(ifconfig | sed -n 's/ether//p' | sed -n 's/^[[:space:]]*//gp' | sed -n 's/[[:space:]].*//gp')
+MAC_ADDRESS=$(ip addr show | grep "ether" | awk '{printf $2}')
 # Public and Private IP Addresses
 PUBLIC_IP_ADDRESS=$(curl -s ifconfig.me)
 LOCAL_IP_ADDRESS=$(hostname -I | awk '{print $1}')

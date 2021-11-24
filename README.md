@@ -297,6 +297,15 @@ born2beroot made with ❤ for 42sp.
 	$ sudo passwd username
 	```
 
+- We can also use the `adduser` command to do the same:
+
+	```
+	// Syntax
+	$sudo adduser username
+	```
+
+- **NOTE:** When we add a user, with adduser and we are prompted for a password, if we exceed the maximum retries (which in our case is 3) **the user will still be created** but with no password. That means we **will not be able** to authenticate this user using the password method, for obvious reasons.
+
 - To change a user's name, we do:
 
 	```
@@ -422,6 +431,14 @@ born2beroot made with ❤ for 42sp.
 - Now, we ensure that the new password does not contain less than 7 characters that are different of the former password:
 
 	![pw_diff_old](images/pw_diff_old.png)
+
+- Additionally, we can also set the max password retries to a maximum of 3 with:
+
+	![pw_max_retries](images/pw_max_retries.png)
+
+- Finally, to enforce these policies for the root password:
+
+	![pw_enforce_root](images/pw_enforce_root.png)
 
 ## Configuring `sudo`
 
